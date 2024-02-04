@@ -1,24 +1,24 @@
 <!-- download_file.php -->
 
 <?php
-$file = $_GET["file"];
+$uploadsDirectory = "uploads/";
 
-// Validate the file name or path as needed
+if (isset($_GET['file'])) {
+    $fileName = basename($_GET['file']);
+    $filePath = $uploadsDirectory . $fileName;
 
-$filePath = "uploads/" . $file;
-
-if (file_exists($filePath)) {
-    header("Content-Description: File Transfer");
-    header("Content-Type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=" . basename($filePath));
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate");
-    header("Pragma: public");
-    header("Content-Length: " . filesize($filePath));
-    readfile($filePath);
-    exit;
-} else {
-    // Handle the case where the file does not exist
-    echo "File not found.";
+    if (file_exists($filePath)) {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=' . $fileName);
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($filePath));
+        readfile($filePath);
+        exit;
+    } else {
+        echo 'File not found.';
+    }
 }
 ?>
