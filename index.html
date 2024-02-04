@@ -5,15 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FileHub</title>
     <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
-    <h1>Hello, FileHub!</h1>
-    <form action="upload.php" method="post" enctype="multipart/form-data">
-        Select image to upload:
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
-    </form>
-    <a href="files.php">Список файлов</a>
+    <div class="folder-window">
+        <h1>Hello, FileHub!</h1>
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            Select file to upload:
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="submit" value="Upload File" name="submit">
+        </form>
+        <div class="file-list" id="file-list">
+            <!-- Файлы будут отображаться здесь -->
+        </div>
+    </div>
 </body>
 </html>
