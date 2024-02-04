@@ -9,10 +9,10 @@
 <body>
     <div class="folder-window">
         <h1>Hello, FileHub!</h1>
-        <form action="uploads.php" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" enctype="multipart/form-data">
             Select file to upload:
             <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="submit" value="Upload File" name="submit">
+            <input type="button" value="Upload File" onclick="uploadFile()">
         </form>
         <div class="file-list" id="file-list">
             <!-- Файлы будут отображаться здесь -->
@@ -20,29 +20,36 @@
     </div>
 
     <script>
-        // Функция для удаления файла
-        function deleteFile(fileName) {
-            if (confirm("Are you sure you want to delete " + fileName + "?")) {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        // После удаления файла, обновляем список файлов
-                        loadFileList();
-                    }
-                };
-                xhr.open("GET", "delete_file.php?file=" + fileName, true);
-                xhr.send();
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            // Загрузка списка файлов при загрузке страницы
+            loadFileList();
+        });
+
+        function uploadFile() {
+            var formData = new FormData(document.getElementById("uploadForm"));
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    // Очищаем содержимое контейнера перед добавлением нового списка
+                    document.getElementById("file-list").innerHTML = "";
+
+                    // Добавляем новый список файлов
+                    document.getElementById("file-list").innerHTML = xhr.responseText;
+
+                    // Очищаем поле ввода файла после успешной загрузки
+                    document.getElementById("fileToUpload").value = "";
+                }
+            };
+
+            xhr.open("POST", "uploads.php", true);
+            xhr.send(formData);
         }
 
-        // Функция для загрузки списка файлов с сервера
         function loadFileList() {
             var fileListContainer = document.getElementById("file-list");
 
-            // Создаем объект XMLHttpRequest для выполнения AJAX-запроса
             var xhr = new XMLHttpRequest();
-
-            // Устанавливаем обработчик события изменения состояния запроса
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // Очищаем содержимое контейнера перед добавлением нового списка
@@ -53,15 +60,9 @@
                 }
             };
 
-            // Отправляем GET-запрос на сервер для получения списка файлов
             xhr.open("GET", "file_list.php", true);
             xhr.send();
         }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Загрузка списка файлов при загрузке страницы
-            loadFileList();
-        });
     </script>
 </body>
 </html>
