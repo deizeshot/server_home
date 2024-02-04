@@ -10,11 +10,14 @@ function uploadFile() {
                 // File upload was successful, now update the file list
                 loadFileList();
                 
-                // Optionally, you can provide feedback to the user about the successful upload.
+                // Provide feedback to the user about the successful upload
                 alert("File successfully uploaded!");
+            } else if (xhr.status === 500) {
+                // There was an internal server error during file upload
+                alert("Internal Server Error. Please try again.");
             } else {
                 // There was an error during file upload
-                alert("Error uploading file. Please try again.");
+                alert("Error uploading file. Please try again. Status: " + xhr.status);
             }
 
             // Clear the input field regardless of success or failure
@@ -26,7 +29,6 @@ function uploadFile() {
     xhr.send(formData);
 }
 
-
 // Функция для удаления файла
 function deleteFile(fileName) {
     if (confirm("Are you sure you want to delete " + fileName + "?")) {
@@ -35,6 +37,9 @@ function deleteFile(fileName) {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // После удаления файла, обновляем список файлов
                 loadFileList();
+            } else {
+                // There was an error during file deletion
+                alert("Error deleting file. Please try again. Status: " + xhr.status);
             }
         };
         xhr.open("GET", "delete_file.php?file=" + fileName, true);
@@ -48,12 +53,17 @@ function loadFileList() {
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Очищаем содержимое контейнера перед добавлением нового списка
-            fileListContainer.innerHTML = "";
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Очищаем содержимое контейнера перед добавлением нового списка
+                fileListContainer.innerHTML = "";
 
-            // Добавляем новый список файлов
-            fileListContainer.innerHTML = xhr.responseText;
+                // Добавляем новый список файлов
+                fileListContainer.innerHTML = xhr.responseText;
+            } else {
+                // There was an error during file list retrieval
+                alert("Error loading file list. Please try again. Status: " + xhr.status);
+            }
         }
     };
 
