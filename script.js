@@ -54,3 +54,8 @@ function loadFileList() {
     xhr.open("GET", "file_list.php", true);
     xhr.send();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Загрузка списка файлов при загрузке страницы
+    loadFileList();
+});
