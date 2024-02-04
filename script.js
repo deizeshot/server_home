@@ -6,13 +6,18 @@ function uploadFile() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            // Очищаем содержимое контейнера перед добавлением нового списка
-            document.getElementById("file-list").innerHTML = "";
+            if (xhr.status === 200) {
+                // File upload was successful, now update the file list
+                loadFileList();
+                
+                // Optionally, you can provide feedback to the user about the successful upload.
+                alert("File successfully uploaded!");
+            } else {
+                // There was an error during file upload
+                alert("Error uploading file. Please try again.");
+            }
 
-            // Добавляем новый список файлов
-            document.getElementById("file-list").innerHTML = xhr.responseText;
-
-            // Очищаем поле ввода файла после успешной загрузки
+            // Clear the input field regardless of success or failure
             document.getElementById("fileToUpload").value = "";
         }
     };
@@ -20,6 +25,7 @@ function uploadFile() {
     xhr.open("POST", "uploads.php", true);
     xhr.send(formData);
 }
+
 
 // Функция для удаления файла
 function deleteFile(fileName) {
