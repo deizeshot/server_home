@@ -6,6 +6,7 @@ $fileList = glob($uploadsDirectory . "*");
 
 // Выводим список файлов
 foreach ($fileList as $file) {
-    echo basename($file) . "<br>";
+    $fileName = basename($file);
+    echo $fileName . ' <button onclick="deleteFile(\'' . $fileName . '\')">Delete</button><br>';
 }
 ?>
