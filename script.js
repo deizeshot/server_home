@@ -73,13 +73,28 @@ function loadFileList() {
 
 // Функция для скачивания файла
 function downloadFile(fileName) {
-    var link = document.createElement('a');
-    link.href = 'download_file.php?file=' + encodeURIComponent(fileName);
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Создаем временную ссылку для скачивания файла
+                var link = document.createElement('a');
+                link.href = 'data:application/octet-stream,' + encodeURIComponent(xhr.responseText);
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                // There was an error during file download
+                alert("Error downloading file. Please try again. Status: " + xhr.status);
+            }
+        }
+    };
+
+    xhr.open("GET", "download_file.php?file=" + encodeURIComponent(fileName), true);
+    xhr.send();
 }
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
