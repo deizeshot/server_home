@@ -7,6 +7,7 @@ $uploadsDirectory = "uploads/";
 $fileList = glob($uploadsDirectory . "*");
 
 // Выводим список файлов
+echo "<div class='file-list-container'>";
 foreach ($fileList as $file) {
     $fileName = basename($file);
     echo "<div class='file-item'>";
@@ -16,4 +17,5 @@ foreach ($fileList as $file) {
     echo "<button class='download-button' onclick='downloadFile(\"$fileName\")'><i class='fas fa-download'></i> Download</button>";
     echo "</div>";
 }
+echo "</div>";
 ?>

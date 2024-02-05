@@ -18,6 +18,12 @@ h1 {
     color: #333;
 }
 
+.file-list-container {
+    max-width: 600px; /* Максимальная ширина контейнера для списка файлов */
+    margin: 0 auto; /* Центрирование контейнера */
+}
+
+
 #file-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -52,6 +58,7 @@ h1 {
 
 .delete-button,
 .download-button {
+    margin-right: 10px;
     padding: 8px 16px;
     margin-left: auto;
     cursor: pointer;
