@@ -1,5 +1,3 @@
-<!-- download_file.php -->
-
 <?php
 $uploadsDirectory = "uploads/";
 
@@ -8,7 +6,8 @@ if (isset($_GET['file'])) {
     $filePath = $uploadsDirectory . $fileName;
 
     if (file_exists($filePath)) {
-        // Установка HTTP-заголовков для скачивания файла
+        $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename=' . $fileName);
@@ -16,8 +15,10 @@ if (isset($_GET['file'])) {
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
         header('Content-Length: ' . filesize($filePath));
+        
+        // Добавляем эту строку для правильного типа контента
+        header('Content-Type: image/png'); // Или измените тип контента на соответствующий вашему файлу
 
-        // Считывание файла и отправка его клиенту
         readfile($filePath);
         exit;
     } else {
