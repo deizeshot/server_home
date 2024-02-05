@@ -71,6 +71,17 @@ function loadFileList() {
     xhr.send();
 }
 
+// Функция для скачивания файла
+function downloadFile(fileName) {
+    var link = document.createElement('a');
+    link.href = 'download_file.php?file=' + encodeURIComponent(fileName);
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     // Загрузка списка файлов при загрузке страницы
     loadFileList();

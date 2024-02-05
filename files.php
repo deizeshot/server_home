@@ -1,3 +1,5 @@
+<!-- files.php -->
+
 <?php
 $uploadsDirectory = 'uploads/';
 
