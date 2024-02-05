@@ -37,6 +37,43 @@ h1 {
     margin-bottom: 10px;
 }
 
+/* Стили для файла и кнопок */
+.file-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.file-icon {
+    margin-right: 10px;
+    font-size: 24px;
+    /* Добавим стили по вашему усмотрению, например, цвет иконки */
+}
+
+.delete-button,
+.download-button {
+    padding: 8px 16px;
+    margin-left: auto;
+    cursor: pointer;
+    background-color: #ff6347; /* Красный цвет */
+    color: #fff; /* Белый цвет текста */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Уменьшим размер иконок на мобильных устройствах */
+@media (max-width: 768px) {
+    .file-icon {
+        font-size: 20px;
+    }
+
+    .delete-button,
+    .download-button {
+        font-size: 14px;
+    }
+}
+
 .upload-btn-wrapper {
     position: relative;
     overflow: hidden;
